@@ -1,0 +1,13 @@
+# Folders
+node_modules/
+**/node_modules/
+
+# Local env files
+.env
+.env.local
+**/.env
+**/.env.local
+
+# Build outputs
+dist/
+**/dist/
