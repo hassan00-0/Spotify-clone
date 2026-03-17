@@ -1,8 +1,12 @@
 import express from "express";
+import {
+  protectRoute,
+  requireAdmin,
+} from "../../middlewares/auth.middleware.js";
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
+router.get("/", protectRoute, requireAdmin, (req, res) => {
   res.send("admin routes working");
 });
 
