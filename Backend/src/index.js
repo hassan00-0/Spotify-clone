@@ -8,6 +8,8 @@ import adminRoutes from "./routes/admin.route.js";
 import songRoutes from "./routes/song.route.js";
 import albumRoutes from "./routes/album.route.js";
 import statRoutes from "./routes/stats.route.js";
+import fileUpload from "express-fileupload";
+import path from "path";
 
 import { connectDb } from "./lib/db.js";
 
@@ -16,8 +18,21 @@ dotenv.config();
 const PORT = process.env.PORT;
 
 const app = express();
+
+const __dirname = path.resolve();
+
 app.use(express.json());
 app.use(clerkMiddleware()); // to be able to attack clerk auth to req
+app.use(
+  fileUpload({
+    useTempFiles: true,
+    tempFileDir: path.join(__dirname, "temp"),
+    createParentPath: true,
+    limits: {
+      fileSize: 10 * 1024 * 1024,
+    },
+  }),
+);
 
 // route middlewares
 app.use("/api/users", userRoutes);
