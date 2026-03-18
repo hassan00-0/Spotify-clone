@@ -15,7 +15,7 @@ const uploadToCloudinary = async (file) => {
   }
 };
 
-export const createSong = async (req, res) => {
+export const createSong = async (req, res, next) => {
   try {
     // make sure all files are provided
     if (!req.files || !req.files.audioFile || !req.files.imageFile) {
@@ -53,6 +53,34 @@ export const createSong = async (req, res) => {
     res.status(201).json({ success: true, song });
   } catch (error) {
     console.log("Error in create song ", error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+};
+
+export const deleteSong = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    // get the song and check if it exists
+    const song = await Song.findById(id);
+    if (!song) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Song not found" });
+    }
+    // if its in an album remove it
+    if (song.albumId) {
+      await Album.findByIdAndUpdate(song.albumId, {
+        $pull: { songs: song._id },
+      });
+    }
+    // delete it from db
+    await Song.findByIdAndDelete(id);
+    res
+      .status(200)
+      .json({ success: true, message: "Song deleted successfully" });
+  } catch (error) {
+    console.log("error in deleting song ", error);
     res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 };
