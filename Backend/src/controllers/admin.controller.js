@@ -88,12 +88,13 @@ export const deleteSong = async (req, res, next) => {
 export const createAlbum = async (req, res, next) => {
   try {
     const { title, artist, releaseYear } = req.body;
-    const { imageFile } = req.files;
+
     if (!req.files || !req.files.imageFile)
       return res.status(400).json({
         success: false,
         message: "please provide the image of the album",
       });
+    const { imageFile } = req.files;
     const imageUrl = await uploadToCloudinary(imageFile);
 
     if (!title || !artist || !imageUrl || !releaseYear) {
@@ -135,4 +136,8 @@ export const deleteAlbum = async (req, res, next) => {
     console.log(error);
     res.status(500).json({ success: false, message: "Internal Server Error" });
   }
+};
+
+export const checkAdmin = async (req, res, next) => {
+  res.status(200).json({ success: true, admin: true });
 };
