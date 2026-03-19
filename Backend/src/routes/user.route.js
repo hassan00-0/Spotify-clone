@@ -4,7 +4,7 @@ import { getAllUsers } from "../controllers/user.controller.js";
 
 const router = express.Router();
 
-router.get("/", protectRoute, requireAdmin, getAllUsersAllUsers);
+router.get("/", protectRoute, requireAdmin, getAllUsers);
 // todo : getMessages
 
 export default router;

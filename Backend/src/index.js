@@ -46,3 +46,5 @@ app.listen(PORT, () => {
   connectDb();
   console.log("listening on port ", PORT);
 });
+
+// todo: socket.io
