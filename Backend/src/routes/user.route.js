@@ -1,9 +1,10 @@
 import express from "express";
+import { protectRoute, requireAdmin } from "../middlewares/auth.middleware.js";
+import { getAllUsers } from "../controllers/user.controller.js";
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.send("user routes working");
-});
+router.get("/", protectRoute, requireAdmin, getAllUsersAllUsers);
+// todo : getMessages
 
 export default router;
