@@ -2,11 +2,18 @@ import PlayListSkeleton from "@/components/Skeletons/PlayListSkeleton";
 import { buttonVariants } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
+import { useMusicStore } from "@/stores/useMusicStore";
 import { SignedIn } from "@clerk/clerk-react";
 import { Home, Library, MessageCircle } from "lucide-react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const LeftSideBar = () => {
+  const { albums, isLoading, fetchAlbums } = useMusicStore();
+  useEffect(() => {
+    fetchAlbums();
+  }, [fetchAlbums]);
+
   return (
     <div className="h-full min-w-0 overflow-hidden flex flex-col gap-2">
       {/* top navigation box */}
@@ -48,9 +55,34 @@ const LeftSideBar = () => {
           <span className="hidden md:inline">Playlists</span>
         </div>
         {/* the actual scrollarea */}
-        <ScrollArea className="flex-1 min-h-0">
-          <PlayListSkeleton />
-        </ScrollArea>
+
+        <div className="h-80 md:h-105 overflow-hidden">
+          <ScrollArea className="h-full">
+            {isLoading ? (
+              <PlayListSkeleton />
+            ) : (
+              albums?.map((album) => (
+                <Link
+                  to={`albums/${album._id}`}
+                  key={album._id}
+                  className="p-2 hover:bg-zinc-800 flex items-center gap-3 rounded-md group cursor-pointer"
+                >
+                  <img
+                    src={album.imageUrl}
+                    alt="Playlist img"
+                    className="size-12 rounded-md shrink-0 object-cover"
+                  />
+                  <div className="flex-1 min-w-0 hidden md:block">
+                    <p className="font-medium truncate">{album.title}</p>
+                    <p className="text-sm text-zinc-400 truncate">
+                      Album • {album.artist}
+                    </p>
+                  </div>
+                </Link>
+              ))
+            )}
+          </ScrollArea>
+        </div>
       </div>
     </div>
   );
