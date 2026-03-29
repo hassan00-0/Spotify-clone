@@ -4,6 +4,8 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 import { Outlet } from "react-router-dom";
+import LeftSideBar from "./LeftSideBar";
+import RightSideBar from "./RightSideBar";
 
 const MainLayout = () => {
   const isMobile = false;
@@ -20,7 +22,9 @@ const MainLayout = () => {
           maxSize={350}
           className="overflow-hidden min-w-0"
         >
-          <div className="truncate">left sidebar</div>
+          <div className="truncate">
+            <LeftSideBar />
+          </div>
         </ResizablePanel>
 
         <ResizableHandle className="w-2 bg-black rounded-lg" />
@@ -39,7 +43,9 @@ const MainLayout = () => {
           collapsedSize={0}
           className="overflow-hidden min-w-0"
         >
-          <div className="truncate">friends activity</div>
+          <div className="truncate">
+            <RightSideBar />
+          </div>
         </ResizablePanel>
       </ResizablePanelGroup>
     </div>
