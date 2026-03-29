@@ -13,7 +13,7 @@ const MainLayout = () => {
     <div className="h-screen bg-black text-white flex flex-col">
       <ResizablePanelGroup
         orientation="horizontal"
-        className="flex-1 flex h-full overflow-hidden p-2 w-full min-w-0"
+        className="flex-1 flex h-full overflow-hidden p-2 box-border min-w-0"
       >
         {/* left side bar */}
         <ResizablePanel
@@ -22,9 +22,7 @@ const MainLayout = () => {
           maxSize={350}
           className="overflow-hidden min-w-0"
         >
-          <div className="truncate">
-            <LeftSideBar />
-          </div>
+          <LeftSideBar />
         </ResizablePanel>
 
         <ResizableHandle className="w-2 bg-black rounded-lg" />
@@ -43,9 +41,7 @@ const MainLayout = () => {
           collapsedSize={0}
           className="overflow-hidden min-w-0"
         >
-          <div className="truncate">
-            <RightSideBar />
-          </div>
+          <RightSideBar />
         </ResizablePanel>
       </ResizablePanelGroup>
     </div>
