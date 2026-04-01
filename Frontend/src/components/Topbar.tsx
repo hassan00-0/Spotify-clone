@@ -6,7 +6,7 @@ import { SignedIn, SignedOut, SignOutButton } from "@clerk/clerk-react";
 const Topbar = () => {
   const isAdmin = false;
   return (
-    <div className="flex items-center justify-between sticky top-0 p-4 bg-zinc-900/75 backdrop-blur-md">
+    <div className="flex gap-4 items-center justify-between sticky top-0 p-4 bg-zinc-900/75 backdrop-blur-md rounded-lg overflow-hidden">
       <div className="flex">Spotify</div>
       <div className="flex">
         {isAdmin && (
