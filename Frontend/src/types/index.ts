@@ -19,3 +19,9 @@ export interface Album {
   releaseYear: number;
   songs: Song[];
 }
+
+export interface User {
+  _id: string;
+  fullName: string;
+  imageUrl: string;
+}

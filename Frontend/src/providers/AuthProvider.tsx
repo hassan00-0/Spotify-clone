@@ -12,22 +12,32 @@ const updateApiToken = (token: string | null) => {
 };
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const { getToken } = useAuth();
+  const { getToken, isLoaded, isSignedIn } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     const initAuth = async () => {
       try {
+        if (!isLoaded) return;
+
+        if (!isSignedIn) {
+          updateApiToken(null);
+          return;
+        }
+
         const token = await getToken();
         updateApiToken(token);
       } catch (error) {
         updateApiToken(null);
         console.log("Error in auth provider", error);
       } finally {
-        setIsLoading(false);
+        if (isLoaded) {
+          setIsLoading(false);
+        }
       }
     };
     initAuth();
-  }, [getToken]);
+  }, [getToken, isLoaded, isSignedIn]);
 
   if (isLoading)
     return (
@@ -35,6 +45,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         <Loader className="size-8 text-emerald-500 animate-spin" />
       </div>
     );
+
   return <>{children}</>;
 };
 
