@@ -12,7 +12,6 @@ const HomePage = () => {
     fetchTrendingSongs,
     isLoading,
     madeForYouSongs,
-    featuredSongs,
     trendingSongs,
   } = useMusicStore();
 
